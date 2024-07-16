@@ -3,3 +3,24 @@ controllers:
         path: ../src/Controller/
         namespace: App\Controller
     type: attribute
+service_create:
+    path: /service/create
+    controller: App\Controller\ServiceController::create
+    methods: ['POST']
+
+service_update:
+    path: /service/update/{id}
+    controller: App\Controller\ServiceController::update
+    methods: ['POST']
+
+service_get_user:
+    path: /service/user/{id}
+    controller: App\Controller\ServiceController::getUserById
+    methods: ['GET']
+
+service_login_user:
+    path: /service/login
+    controller: App\Controller\ServiceController::login
+    methods: ['POST']
+
+
