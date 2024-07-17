@@ -1,0 +1,199 @@
+nelmio_api_doc:
+    documentation:
+        servers:
+            - url: http://localhost:8000
+              description: API over HTTP
+        info:
+            title: My App
+            description: This is an awesome app!
+            version: 1.0.0
+        components:
+            securitySchemes:
+                Bearer:
+                    type: http
+                    scheme: bearer
+                    bearerFormat: JWT
+        security:
+            - Bearer: []
+        paths:
+            /service/create:
+                post:
+                    tags:
+                        - User
+                    requestBody:
+                        required: true
+                        content:
+                            application/json:
+                                schema:
+                                    type: object
+                                    properties:
+                                        email:
+                                            type: string
+                                            example: "mailto:user@example.com"
+                                        password:
+                                            type: string
+                                            example: "password"
+                    responses:
+                        '200':
+                            description: "User created successfully"
+                            content:
+                                application/json:
+                                    schema:
+                                        type: object
+                                        properties:
+                                            message:
+                                                type: string
+                                                example: "User created successfully"
+                        '400':
+                            description: "Bad request"
+                            content:
+                                application/json:
+                                    schema:
+                                        type: object
+                                        properties:
+                                            message:
+                                                type: string
+                                                example: "Email and password are required."
+                        '401':
+                            description: "Unauthorized"
+                            content:
+                                application/json:
+                                    schema:
+                                        type: object
+                                        properties:
+                                            message:
+                                                type: string
+                                                example: "Invalid email or password."
+            /service/update/{id}:
+                post:
+                    tags:
+                        - User
+                    parameters:
+                        - name: id
+                          in: path
+                          description: "The id of the user to update"
+                          schema:
+                            type: integer
+                            example: 1
+                    requestBody:
+                        required: true
+                        content:
+                            application/json:
+                                schema:
+                                    type: object
+                                    properties:
+                                        email:
+                                            type: string
+                                            example: "mailto:user@example.com"
+                                        password:
+                                            type: string
+                                            example: "password"
+                    responses:
+                        '200':
+                            description: "User updated successfully"
+                            content:
+                                application/json:
+                                    schema:
+                                        type: object
+                                        properties:
+                                            message:
+                                                type: string
+                                                example: "User updated successfully"
+                        '400':
+                            description: "Bad request"
+                            content:
+                                application/json:
+                                    schema:
+                                        type: object
+                                        properties:
+                                            message:
+                                                type: string
+                                                example: "Email and password are required."
+                        '401':
+                            description: "Unauthorized"
+                            content:
+                                application/json:
+                                    schema:
+                                        type: object
+                                        properties:
+                                            message:
+                                                type: string
+                                                example: "Invalid email or password."
+            /service/user/{id}:
+                get:
+                    tags:
+                        - User
+                    parameters:
+                        - name: id
+                          in: path
+                          description: "The id of the user to retrieve"
+                          schema:
+                            type: integer
+                            example: 1
+                    responses:
+                        '200':
+                            description: "User retrieved successfully"
+                            content:
+                                application/json:
+                                    schema:
+                                        type: object
+                                        properties:
+                                            message:
+                                                type: string
+                                                example: "User retrieved successfully"
+            /service/login:
+                post:
+                    tags:
+                        - Login
+                    requestBody:
+                        required: true
+                        content:
+                            application/json:
+                                schema:
+                                    type: object
+                                    properties:
+                                        email:
+                                            type: string
+                                            example: "user@example.com"
+                                        password:
+                                            type: string
+                                            example: "password"
+                    responses:
+                        '200':
+                            description: "User connected successfully"
+                            content:
+                                application/json:
+                                    schema:
+                                        type: object
+                                        properties:
+                                            message:
+                                                type: string
+                                                example: "User connected successfully"
+                        '400':
+                            description: "Bad request"
+                            content:
+                                application/json:
+                                    schema:
+                                        type: object
+                                        properties:
+                                            message:
+                                                type: string
+                                                example: "Email and password are required."
+                        '401':
+                            description: "Unauthorized"
+                            content:
+                                application/json:
+                                    schema:
+                                        type: object
+                                        properties:
+                                            message:
+                                                type: string
+                                                example: "Invalid email or password."
+
+    areas:
+        default:
+            path_patterns:
+                - ^/api(?!/doc$) # Accepts routes under /api except /api/doc
+                - ^/login$ # Accepts the /login endpoint
+                - ^/api/users
+            with_annotation: true
